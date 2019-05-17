@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<resources>
+
+    <string name="app_name">Ticket_getter</string>
+
+    <string name="title">Title</string>
+
+    <string name="sub_title">SubTitle</string>
+
+    <string name="set_title">發票對獎</string>
+
+    <string name="input_number">請輸入發票號碼</string>
+
+    <string name="contact">contact</string>
+
+</resources>
