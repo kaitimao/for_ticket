@@ -1,10 +1,8 @@
 package com.example.for_ticket;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -22,6 +20,9 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,15 +45,12 @@ public class MainActivity extends AppCompatActivity {
         SyncTEST syncTEST = new SyncTEST();
         syncTEST.execute();
 
-        input_number.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                switch (actionId){
-                    case EditorInfo.IME_ACTION_DONE:
-                        methods();
-                }
-                return false;
+        input_number.setOnEditorActionListener((v, actionId, event) -> {
+            switch (actionId){
+                case EditorInfo.IME_ACTION_DONE:
+                    methods();
             }
+            return false;
         });
     }
 
@@ -63,61 +61,55 @@ public class MainActivity extends AppCompatActivity {
         show_number.setText("");
         show_number.setText(ticket);
 
-        Runnable r2 = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    int number = Integer.parseInt(ticket);
-                    n1 = Integer.valueOf(data141);
-                    n2 = Integer.valueOf(data142);
-                    String d1 = data131.substring(data131.length() - 3);
-                    String d2 = data132.substring(data132.length() - 3);
-                    String d3 = data133.substring(data133.length() - 3);
-                    n3 = Integer.valueOf(d3);
-                    n4 = Integer.valueOf(d2);
-                    n5 = Integer.valueOf(d1);
+        Runnable r2 = () -> {
+            try {
+                int number = Integer.parseInt(ticket);
+                n1 = Integer.valueOf(data141);
+                n2 = Integer.valueOf(data142);
+                String d1 = data131.substring(data131.length() - 3);
+                String d2 = data132.substring(data132.length() - 3);
+                String d3 = data133.substring(data133.length() - 3);
+                n3 = Integer.valueOf(d3);
+                n4 = Integer.valueOf(d2);
+                n5 = Integer.valueOf(d1);
 
-                    Log.e("TESTn1", String.valueOf(n1));
-                    Log.e("TESTn2", String.valueOf(n2));
-                    Log.e("TESTn3", String.valueOf(n3));
-                    Log.e("TESTn4", String.valueOf(n4));
-                    Log.e("TESTn5", String.valueOf(n5));
+                Log.e("TESTn1", String.valueOf(n1));
+                Log.e("TESTn2", String.valueOf(n2));
+                Log.e("TESTn3", String.valueOf(n3));
+                Log.e("TESTn4", String.valueOf(n4));
+                Log.e("TESTn5", String.valueOf(n5));
 
 
-                    if (number == n1) {
-                        show_point_to_textview(0);
-                    } else if(number == n2){
-                        show_point_to_textview(0);
-                    }else if(number == n3) {
-                        show_point_to_textview(0);
-                    }else if(number == n4) {
-                        show_point_to_textview(0);
-                    }else if(number == n5) {
-                        show_point_to_textview(0);
-                    }else {
-                        show_point_to_textview(1);
-                    }
-
-                }catch (Exception e){
-                    Log.e("TEST", e.toString());
-                    Log.e("TEST", String.valueOf(n1));
-
+                if (number == n1) {
+                    show_point_to_textview(0);
+                } else if(number == n2){
+                    show_point_to_textview(0);
+                }else if(number == n3) {
+                    show_point_to_textview(0);
+                }else if(number == n4) {
+                    show_point_to_textview(0);
+                }else if(number == n5) {
+                    show_point_to_textview(0);
+                }else {
+                    show_point_to_textview(1);
                 }
+
+            }catch (Exception e){
+                Log.e("TEST", e.toString());
+                Log.e("TEST", String.valueOf(n1));
+
             }
         };
         if( flag == 1 ){
-            Runnable r1 = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        if (flag == 1){
-                            analyce();
-                        }else {
-                            Log.e("TEST", "在等一下");
-                        }
-                    } catch (Exception e) {
-                        Log.e("TEST", e.toString());
+            Runnable r1 = () -> {
+                try {
+                    if (flag == 1){
+                        analyce();
+                    }else {
+                        Log.e("TEST", "在等一下");
                     }
+                } catch (Exception e) {
+                    Log.e("TEST", e.toString());
                 }
             };
             r1.run();
@@ -183,12 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testt(View view) {
-        testt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                methods();
-            }
-        });
+        testt.setOnClickListener(v -> methods());
     }
 
 
