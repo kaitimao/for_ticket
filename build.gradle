@@ -1,27 +1,250 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.android.application'
+//apply plugin: 'com.google.gms.google-services'
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-        
+android {
+
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
-        
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+
+    signingConfigs {
+        config {
+            keyAlias 'youlive'
+            keyPassword 'weking'
+            storeFile file('../signkey/youlive-android-keystore.jks')
+            storePassword 'weking'
+        }
     }
+
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    defaultConfig {
+        applicationId "com.youliveapp.live"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        // 个推
+        manifestPlaceholders = [
+//                //正式版
+//                GETUI_APP_ID    : "Bf1vAUsAGW7wU8vG2cOv71",
+//                GETUI_APP_KEY   : "J00csl2cgm56FqGJcikzR2",
+//                GETUI_APP_SECRET: "L1MERUJaKS63NA6qd38Mz5"
+
+////                测试版
+//                GETUI_APP_ID    : "PrpVoh7gLj9occlMJioXN3",
+//                GETUI_APP_KEY   : "4OyaydgcrM6b7Ow6MhNFYA",
+//                GETUI_APP_SECRET: "cALpPiqBHM81Loyc1KoCo"
+GETUI_APP_ID    : "nYRTmit3wt7PtV6rK3Jnk9",
+GETUI_APP_KEY   : "rTOsN1ywopAEzGOgnuStvA",
+GETUI_APP_SECRET: "lwN3gRiVkX85aofbYTWQb3"
+        ]
+        // 个推
+//        ndk {
+//            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "mips", "mips64", "x86", "x86_64"
+//        }
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+
+
+    compileOptions {
+        sourceCompatibility 1.7
+        targetCompatibility 1.7
+    }
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+    }
+    dataBinding {
+        enabled = true
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs', 'bizlibs']
+        }
+    }
+    dexOptions {
+//        incremental true
+        javaMaxHeapSize "4g"
+    }
+
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:support-v4:26.1.0'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation deps.appcompatV7
+    testImplementation deps.jUnit
+    implementation deps.butterknife
+    annotationProcessor deps.butterknifeCompiler
+    implementation deps.recyclerviewV7
+    implementation deps.cardviewV7
+    implementation deps.materialicons
+
+    //
+    implementation 'com.google.android:flexbox:1.0.0'
+
+    //首页滑动
+    implementation deps.design
+
+    //各种swipe 效果的包
+    implementation deps.ultimateSwipeTool
+
+    // 内存检查
+
+    //无限轮播
+
+    //最新版本
+
+    // eventbus
+    implementation project(':WkLib:annotationlib')
+    implementation project(':WkLib:apt')
+    implementation project(':WkLib:ImagePicker')
+    implementation project(':WkLib:StatusLayout')
+    implementation project(':WkLib:loginmethod')
+    implementation project(':WkLib:wkcore')
+    implementation project(':WkLib:gsyVideoPlayer-java')
+    implementation project(':Game:app')
+    implementation project(':videoplayer')
+    implementation project(':baseui')
+
+    /*Annotation by Laird*/
+
+    //implementation project(':WkLib:PullRefreshView')
+
+    //    implementation project(':GiftAnim:app')
+    implementation project(':SmallVideoRecord2:SmallVideoLib2')
+
+    //    implementation 'wk-common:wk-common-videoPlayer:1.0.1-SNAPSHOT'
+    implementation 'wk-common:wk-common-wkimageLoader:1.1.6-SNAPSHOT'
+
+    //    implementation 'wk-common:wk-common-base:1.0.2-SNAPSHOT'
+    implementation 'wk-common:wk-common-permissions:1.0.0-SNAPSHOT'
+
+    //    implementation project(':BaseUI:app')
+
+    //    implementation files('libs/ve.jar')
+
+    //    implementation files('libs/zegoavkit2.jar')
+
+    //微信
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
+    //个推
+    implementation 'com.getui:sdk:2.11.1.0'
+
+    //    implementation files('libs/libammsdk.jar')
+
+    //友盟
+    implementation 'com.umeng.sdk:common:latest.integration'
+
+    //    implementation 'com.umeng.sdk:common:1.5.0'
+
+    //    implementation 'com.umeng.sdk:analytics:7.5.0'
+
+    //高德
+    implementation files('libs/AMap_Location_V3.3.0_20170118.jar')
+
+    //    implementation files('libs/netty-all-4.1.9.Final.jar')
+
+    //选项卡
+    implementation files('libs/xutils-3.3.20.jar')
+
+    //列表
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
+    implementation files('libs/xUtils-2.6.14.jar')
+    implementation 'com.zhy:base-adapter:2.0.0'
+
+    //视频压缩
+    implementation 'org.aspectj:aspectjrt:1.8.9'
+    implementation 'com.youth.banner:banner:1.4.9'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+
+    // FCM
+
+    //    implementation 'com.google.firebase:firebase-messaging:15.0.2'
+
+    //    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+
+    //Admob
+    implementation 'com.google.android.gms:play-services-ads:15.0.0'
+
+    // google map
+    implementation 'com.google.android.gms:play-services-identity:15.0.0'
+    implementation 'com.google.android.gms:play-services-places:15.0.0'
+    implementation 'com.google.android.gms:play-services-maps:15.0.0'
+    implementation 'com.github.danylovolokh:list-visibility-utils:0.2.0'
+
+    //    implementation 'com.shuyu:GSYVideoPlayer:2.1.1'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.8'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+    implementation 'com.shuyu:gsyvideoplayer-androidvideocache:4.1.0'
+
+    //高斯模糊
+    implementation 'jp.wasabeef:blurry:2.1.1'
+    implementation 'com.mabeijianxi:small-video-record:1.2.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    implementation files('libs/zegoliveroom.jar')
+    api(name: 'ipay_hosted_standard_sdk_20180514', ext: 'aar')
+
+    /*Added by Laird*/
+    implementation 'com.pnikosis:materialish-progress:1.7'
+    configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '25.1.1'
+                }
+            }
+            if (requested.group == 'com.umeng.commonsdk') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '1.5.0'
+                }
+            }
+        }
     }
+    implementation 'com.jakewharton:butterknife:5.1.1'
+    implementation 'com.android.support:appcompat-v7:21.0'
+    implementation 'com.ogaclejapan.smarttablayout:library:1.7.0@aar'
+
+    //Optional: see how to use the utility.
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.7.0@aar'
+    implementation 'com.github.zengzhaoxing:SharpView:v2.4.4'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    //Deprecated since 1.7.0
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+//apply plugin: 'com.google.gms.google-services'
+
