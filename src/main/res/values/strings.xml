@@ -16,11 +16,19 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="titleA">test1</string>
-    <string name="titleB">test2</string>
+    <string name="titleA">輸入兌獎</string>
+    <string name="titleB">掃描兌獎</string>
     <string name="demo">Demo</string>
     <string name="null_string">"                             "</string>
     <string name="isgetornot">有沒有中獎呢</string>
     <string name="fortest">測試用</string>
+    <string name="first_month">1、2月發票</string>
+    <string name="sec_month">3、4月發票</string>
+    <string name="third_month">5、6月發票</string>
+    <string name="forth_month">7、8月發票</string>
+    <string name="fif_month">9、10月發票</string>
+    <string name="six_month">11、12月發票</string>
+    <string name="wait_to_earn">還有20天才能兌獎喔</string>
+
 
 </resources>

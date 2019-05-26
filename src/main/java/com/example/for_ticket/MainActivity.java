@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     private void initData() {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
@@ -88,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("TEST", request.toString());*/
                 Response response = client.newCall(request).execute();
                 responseData = response.body().string();
-                Log.e("TEST1", responseData);
+                //Log.e("TEST1", responseData);
 
 
                 //Jsoup
                 Document d = Jsoup.parse(responseData);
                 Elements elements = d.select("td[class*=number]");
-                Log.e("TEST", elements.toString());
+                //Log.e("TEST", elements.toString());
                 al = new ArrayList<>();
                 for (Element element : elements) {
                     String atest = element.text().trim();
@@ -128,19 +129,19 @@ public class MainActivity extends AppCompatActivity {
             if ((month % 2) == 0) {
                 month -= 1;
                 if (month < 10) {
-                    url1 = url + year + "0" + (month - 4);
+                    url1 = url + year + "0" + (month - 2);
                     Log.d("TEST", url1);
                 } else {
-                    url1 = url + year + (month - 4);
+                    url1 = url + year + (month - 2);
                     Log.d("TEST", url1);
                 }
 
             } else {
                 if (month < 10) {
-                    url1 = url + year + "0" + (month - 4);
+                    url1 = url + year + "0" + (month - 2);
                     Log.d("TEST", url1);
                 } else {
-                    url1 = url + year + (month - 4);
+                    url1 = url + year + (month - 2);
                     Log.d("TEST", url1);
                 }
             }
@@ -160,5 +161,6 @@ public class MainActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
     }
+
 
 }
